@@ -1,0 +1,24 @@
+{
+  "name": "forkify-app",
+  "version": "1.0.0",
+  "description": "Recipe App",
+  "main": "index.html",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "keywords": [
+    "app",
+    "js"
+  ],
+  "author": "Dan",
+  "license": "ISC",
+  "devDependencies": {
+    "parcel": "^2.0.0-beta.1",
+    "sass": "^1.26.10"
+  },
+  "dependencies": {
+    "core-js": "^3.8.0",
+    "regenerator-runtime": "^0.13.7"
+  }
+}
