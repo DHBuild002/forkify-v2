@@ -1,39 +1,47 @@
-import icons from 'url:../../img/icons.svg';
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+function _classPrivateFieldGet(receiver, privateMap) { var descriptor = privateMap.get(receiver); if (!descriptor) { throw new TypeError("attempted to get private field on non-instance"); } if (descriptor.get) { return descriptor.get.call(receiver); } return descriptor.value; }
+
+function _classPrivateFieldSet(receiver, privateMap, value) { var descriptor = privateMap.get(receiver); if (!descriptor) { throw new TypeError("attempted to set private field on non-instance"); } if (descriptor.set) { descriptor.set.call(receiver, value); } else { if (!descriptor.writable) { throw new TypeError("attempted to set read only private field"); } descriptor.value = value; } return value; }
+
+var _ParentEl = new WeakMap();
+
+var _data = new WeakMap();
+
+var _generateMarkup = new WeakSet();
 
 class RecipeView {
-  #ParentEl = document.querySelector('.recipe');
-  #data;
+  constructor() {
+    _generateMarkup.add(this);
+
+    _ParentEl.set(this, {
+      writable: true,
+      value: document.querySelector('.recipe')
+    });
+
+    _data.set(this, {
+      writable: true,
+      value: void 0
+    });
+  }
+
   render(data) {
-    this.#data = data;
-    const markup = this.#generateMarkup();
-    this.#clear();
-    this.#ParentEl.insertAdjacentHTML('afterbegin', markup);
-    //Alternative Clunkier way of writing lines 7 and 8
-    // recipeContainer.innerHTML = '';
-    //recipeContainer.insertAdjacentHTML('afterbegin', markup);
+    _classPrivateFieldSet(this, _data, data);
   }
-  #clear() {
-    this.#ParentEl.innerHTML = '';
-  }
-  renderSpinner = () => {
-    const markup = `
-  <div class="spinner">
-  <svg>
-    <use href="${icons}#icon-loader"></use>
-  </svg>
-  </div>  
-  `;
-    this.#ParentEl.innerHTML = '';
-    this.#ParentEl.insertAdjacentHTML('afterbegin', markup);
-  };
-  #generateMarkup() {
-    return `
+
+}
+
+var _generateMarkup2 = function _generateMarkup2() {
+  return `
     <figure class="recipe__fig">
-    <img src="${this.#data.image}" alt="${
-      this.#data.title
-    }" class="recipe__img" />
+    <img src="${_classPrivateFieldGet(this, _data).image}" alt="${_classPrivateFieldGet(this, _data).title}" class="recipe__img" />
     <h1 class="recipe__title">
-      <span>${this.#data.title}</span>
+      <span>${_classPrivateFieldGet(this, _data).title}</span>
     </h1>
   </figure>
 
@@ -42,18 +50,14 @@ class RecipeView {
       <svg class="recipe__info-icon">
         <use href="${icons}#icon-clock"></use>
       </svg>
-      <span class="recipe__info-data recipe__info-data--minutes">${
-        this.#data.cookingTime
-      }</span>
+      <span class="recipe__info-data recipe__info-data--minutes">${_classPrivateFieldGet(this, _data).cookingTime}</span>
       <span class="recipe__info-text">minutes</span>
     </div>
     <div class="recipe__info">
       <svg class="recipe__info-icon">
         <use href="${icons}#icon-users"></use>
       </svg>
-      <span class="recipe__info-data recipe__info-data--people">${
-        this.#data.servings
-      }</span>
+      <span class="recipe__info-data recipe__info-data--people">${_classPrivateFieldGet(this, _data).servings}</span>
       <span class="recipe__info-text">servings</span>
 
       <div class="recipe__info-buttons">
@@ -85,9 +89,8 @@ class RecipeView {
   <div class="recipe__ingredients">
     <h2 class="heading--2">Recipe ingredients</h2>
     <ul class="recipe__ingredient-list">
-    ${this.#data.ingredients
-      .map(ing => {
-        return `
+    ${_classPrivateFieldGet(this, _data).ingredients.map(ing => {
+    return `
           <li class="recipe__ingredient">
           <svg class="recipe__icon">
             <use href="${icons}#icon-check"></use>
@@ -99,22 +102,19 @@ class RecipeView {
           </div>
         </li>
       `;
-      })
-      .join('')}
+  }).join('')}
   </div>
 
   <div class="recipe__directions">
     <h2 class="heading--2">How to cook it</h2>
     <p class="recipe__directions-text">
       This recipe was carefully designed and tested by
-      <span class="recipe__publisher">${
-        this.#data.publisher
-      }</span>. Please check out
+      <span class="recipe__publisher">${_classPrivateFieldGet(this, _data).publisher}</span>. Please check out
       directions at their website.
     </p>
     <a
       class="btn--small recipe__btn"
-      href="${this.#data.sourceURL}"
+      href="${_classPrivateFieldGet(this, _data).sourceURL}"
       target="_blank"
     >
       <span>Directions</span>
@@ -124,6 +124,8 @@ class RecipeView {
     </a>
   </div>;
   `;
-  }
-}
-export default new RecipeView();
+};
+
+var _default = new RecipeView();
+
+exports.default = _default;

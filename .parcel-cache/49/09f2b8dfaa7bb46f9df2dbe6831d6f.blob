@@ -6001,9 +6001,9 @@ class RecipeView {
   render(data) {
     _classPrivateFieldSet(this, _data, data);
 
-    const markup = _classPrivateMethodGet(this, _generateMarkup, _generateMarkup2).call(this);
+    const markup = _classPrivateMethodGet(this, _generateMarkup, _generateMarkup2);
 
-    _classPrivateMethodGet(this, _clear, _clear2).call(this);
+    _classPrivateMethodGet(this, _clear, _clear2);
 
     _classPrivateFieldGet(this, _ParentEl).insertAdjacentHTML('afterbegin', markup); //Alternative Clunkier way of writing lines 7 and 8
     // recipeContainer.innerHTML = '';
