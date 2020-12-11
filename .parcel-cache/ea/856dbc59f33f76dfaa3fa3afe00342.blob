@@ -511,10 +511,10 @@ const showRecipe = async () => {
     await model.loadRecipe(id);
     const {
       recipe
-    } = model.state;
+    } = model.state.recipe;
     const markup = `
           <figure class="recipe__fig">
-            <img src="${recipe.image}" alt="${recipe.title}" class="recipe__img" />
+            <img src=${recipe.image} alt="${recipe.title}" class="recipe__img" />
             <h1 class="recipe__title">
               <span>${recipe.title}</span>
             </h1>
@@ -5259,7 +5259,7 @@ exports.state = state;
 
 const loadRecipe = async id => {
   try {
-    const res = await fetch(`https://forkify-api.herokuapp.com/api/v2/recipes/${id}`);
+    const res = await fetch('https://forkify-api.herokuapp.com/api/v2/recipes/${id}');
     const data = await res.json();
     if (!res.ok) throw new Error(`${data.message} (${res.status})`);
     const {
