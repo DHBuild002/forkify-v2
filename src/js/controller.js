@@ -20,7 +20,6 @@ const timeout = function (s) {
 const showRecipe = async () => {
   try {
     const id = window.location.hash.slice(1);
-    console.log(id);
 
     if (!id) return;
     recipeView.renderSpinner();
