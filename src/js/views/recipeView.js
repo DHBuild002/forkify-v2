@@ -1,6 +1,5 @@
-import icons from 'url:../../img/icons.svg';
+import icons from '../../img/icons.svg';
 import {Fraction} from 'fractional';
-console.log(Fraction);
 
 class RecipeView {
   #ParentEl = document.querySelector('.recipe');
@@ -28,6 +27,9 @@ class RecipeView {
     this.#ParentEl.innerHTML = '';
     this.#ParentEl.insertAdjacentHTML('afterbegin', markup);
   };
+  addHandlerRender(handler) {
+    ['hashchange', 'load'].forEach(ev => window.addEventListener(ev, handler));
+  }
   #generateMarkup() {
     return `
     <figure class="recipe__fig">

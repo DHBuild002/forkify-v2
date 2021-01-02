@@ -18,8 +18,12 @@
     "sass": "^1.26.10"
   },
   "dependencies": {
+    "config.js": "^0.1.0",
     "core-js": "^3.6.5",
     "fractional": "^1.0.0",
+    "helpers.js": "^1.0.0",
+    "img": "^3.0.3",
+    "parcel-bundler": "^1.12.4",
     "regenerator-runtime": "^0.13.7"
   }
 }
