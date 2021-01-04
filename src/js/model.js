@@ -9,7 +9,7 @@ export const state = {
 // This Function will change the State Object above:
 export const loadRecipe = async (id) => {
   try {
-    const data = await getJSON(`${API_URL}/${id}`);
+    const data = await getJSON(`${API_URL}${id}`);
 
     const { recipe } = data.data;
     state.recipe = {
@@ -28,3 +28,14 @@ export const loadRecipe = async (id) => {
     throw err;
   }
 };
+export const loadSearchResults = async (query) => {
+  try {
+    const data = await getJSON(`${API_URL}?search=${query}`)
+    console.log(data)
+
+  }catch(err){
+    console.error(`${err} 🔥`);
+    throw err;
+  }
+}
+loadSearchResults('pizza');
