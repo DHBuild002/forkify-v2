@@ -28,6 +28,16 @@ const controlRecipes = async () => {
     recipeView.renderError();
   }
 };
+const controlSearchResults = async () => {
+  try{
+    await model.loadSearchResults('pizza')
+    console.log(model.state.search.results);
+  }
+   catch(err){
+     console.log(err)
+  }
+}
+controlSearchResults();
 // window.addEventListener('hashchange', showRecipe)
 // window.addEventListener('load', showRecipe)
 
