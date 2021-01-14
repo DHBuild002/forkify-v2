@@ -1,20 +1,18 @@
 import * as model from './model.js';
-import recipeView from './views/recipeView.js';
+import RecipeView from './views/RecipeView.js';
+import searchView from './views/searchView.js';
+import ResultsView from './views/ResultsView.js';
 import icons from '../img/icons.svg';
+
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
-
-const recipeContainer = document.querySelector('.recipe');
-
-// https://forkify-api.herokuapp.com/v2
-///////////////////////////////////////
 
 const controlRecipes = async () => {
   try {
     const id = window.location.hash.slice(1);
 
     if (!id) return;
-    recipeView.renderSpinner();
+    RecipeView.renderSpinner();
 
     // Load Recipe
     await model.loadRecipe(id);
@@ -22,16 +20,28 @@ const controlRecipes = async () => {
     const { recipe } = model.state;
 
     // Render Recipe - This line of code uses a seperate class to render the active recipe on the page. Check class RecipeView for the render method()
-    recipeView.render(model.state.recipe);
+    RecipeView.render(model.state.recipe);
           
   } catch (err) {
-    recipeView.renderError();
+    RecipeView.renderError();
   }
 };
 const controlSearchResults = async () => {
   try{
-    await model.loadSearchResults('pizza')
+    // Render Spinner from ResultsView file
+    ResultsView.renderSpinner();
+    console.log(ResultsView);
+
+    // Get Search query
+    const query = searchView.getQuery();
+    if (!query) return;
+    
+    //Load in the search results from the query
+    await model.loadSearchResults(query)
+
+    // Render Results
     console.log(model.state.search.results);
+    ResultsView.render(model.state.search.results);
   }
    catch(err){
      console.log(err)
@@ -42,6 +52,8 @@ controlSearchResults();
 // window.addEventListener('load', showRecipe)
 
 const init = () => {
-  recipeView.addHandlerRender(controlRecipes)
+  RecipeView.addHandlerRender(controlRecipes)
+  // This is us calling the addHandler function on the loading of the app.
+  searchView.addHandlerSearch(controlSearchResults);
 }
 init();

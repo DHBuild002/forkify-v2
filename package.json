@@ -24,6 +24,7 @@
     "helpers.js": "^1.0.0",
     "img": "^3.0.3",
     "parcel-bundler": "^1.12.4",
-    "regenerator-runtime": "^0.13.7"
+    "regenerator-runtime": "^0.13.7",
+    "view.js": "^4.1.0"
   }
 }
