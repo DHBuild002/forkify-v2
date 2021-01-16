@@ -6,6 +6,11 @@ import icons from '../img/icons.svg';
 
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
+import { async } from 'regenerator-runtime';
+
+if(module.hot) {
+  module.hot.accept()
+}
 
 const controlRecipes = async () => {
   try {
@@ -40,7 +45,6 @@ const controlSearchResults = async () => {
     await model.loadSearchResults(query)
 
     // Render Results
-    console.log(model.state.search.results);
     ResultsView.render(model.state.search.results);
   }
    catch(err){
