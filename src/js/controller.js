@@ -45,7 +45,7 @@ const controlSearchResults = async () => {
     await model.loadSearchResults(query)
 
     // Render Results
-    ResultsView.render(model.state.search.results);
+    ResultsView.render(model.getSearchResultsPerPage());
   }
    catch(err){
      console.log(err)
