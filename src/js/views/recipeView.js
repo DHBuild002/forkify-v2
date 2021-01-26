@@ -10,6 +10,14 @@ class RecipeView extends View {
   addHandlerRender(handler) {
     ['hashchange', 'load'].forEach(ev => window.addEventListener(ev, handler));
   }
+  addHandlerClick(handler) {
+    this._parentElement.addEventListener('click', (e) => {
+      const btn = e.target.closest('.btn--tiny');
+      if (!btn) return;
+      console.log(btn);
+      handler();
+    })
+  }
   _generateMarkup() {
     return `
     <figure class="recipe__fig">

@@ -64,3 +64,14 @@ export const getSearchResultsPerPage = (page = state.search.page) => {
 
   return state.search.results.slice(start, end)
 }
+export const updateServings = (newServings) => {
+  state.recipe.ingredients.forEach(ing => {
+    ing.quantity = ing.quantity * newServings / state.recipe.servings;
+
+    // newQuantity = oldQt * newSeringsValue / oldServingsValue
+    // Quantity is a child to the servings value. Therefore if that changes, we should also update the 
+    // individual quantities of each ingredient per person. 4 Meals will serve 4 People. 
+    // It will not serve 8 with the same portion size.
+  });
+  state.recipe.servings = newServings;
+}
