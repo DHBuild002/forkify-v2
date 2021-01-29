@@ -61,16 +61,16 @@ controlSearchResults();
 
 // Button click on Pagination event
 const controlPagination = (gotoPage) => {
-  console.log(gotoPage);
+  // console.log(gotoPage);
   // Render New Results
   ResultsView.render(model.getSearchResultsPerPage(gotoPage));
 
   // Render New Pagination buttons
   PaginationView.render(model.state.search);
 }
-const controlServings = () => {
+const controlServings = (newServings) => {
   // Update the number of servings
-  model.updateServings(9);
+  model.updateServings(newServings);
   
   // Render that new value and collection of quantities to the UI
   RecipeView.render(model.state.recipe);
@@ -79,6 +79,7 @@ const controlServings = () => {
 const init = () => {
   RecipeView.addHandlerRender(controlRecipes)
   RecipeView.addHandlerClick(controlServings);
+  
 
   SearchView.addHandlerSearch(controlSearchResults);
   PaginationView.addHandlerClick(controlPagination);

@@ -7,7 +7,7 @@ class ResultsView extends View {
   _errorMessage = 'No Results found. Please try again with a different keyword or recipe name.';
   _message = ``;
   _generateMarkup() {
-    console.log(this._data);
+    // console.log(this._data);
     return this._data.map(this._generateMarkupPreview).join('');
   }
 
