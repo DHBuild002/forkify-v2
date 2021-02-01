@@ -73,7 +73,7 @@ const controlServings = (newServings) => {
   model.updateServings(newServings);
   
   // Render that new value and collection of quantities to the UI
-  RecipeView.render(model.state.recipe);
+  RecipeView.update(model.state.recipe);
 }
 
 const init = () => {

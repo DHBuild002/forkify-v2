@@ -3,7 +3,8 @@ import icons from '../../img/icons.svg';
 export default class View {
   _data;
   render(data) {
-    if(!data || (Array.isArray(data) && data.length === 0)) return this.renderError();
+    if (!data || (Array.isArray(data) && data.length === 0))
+      return this.renderError();
 
     this._data = data;
     const markup = this._generateMarkup();
@@ -13,6 +14,45 @@ export default class View {
     // recipeContainer.innerHTML = '';
     //recipeContainer.insertAdjacentHTML('afterbegin', markup);
   }
+  update(data) {
+    if (!data || (Array.isArray(data) && data.length === 0))
+      return this.renderError();
+
+    this._data = data;
+
+    const newMarkup = this._generateMarkup();
+    // The below line takes the current Markup and creates a copy, making it the copyOfMarkup
+    const newDOM = document.createRange().createContextualFragment(newMarkup);
+
+    // The below line will target all of the existing parentElements contents.
+    const curElements = Array.from(this._parentElement.querySelectorAll('*'));
+    // This line will target the newDOM's copy of the existing markup. Allowing us to then manipulate
+    // the data and update the current state of the UI, later on.
+    const newElements = Array.from(newDOM.querySelectorAll('*'));
+    newElements.forEach((newEl, i) => {
+      const curEl = curElements[i];
+      console.log(curEl, newEl.isEqualNode(curEl));
+
+      // Updates UI Text
+      if (
+        !newEl.isEqualNode(curEl) &&
+        newEl.firstChild.nodeValue.trim() !== ''
+      ) {
+        // console.log('🔥', newEl.firstChild?.nodeValue.trim())
+        curEl.textContent = newEl.textContent;
+      }
+
+      // Updates Changed Attribute in the HTML element
+      if (
+        !newEl.isEqualNode(curEl) &&
+        newEl.firstChild.nodeValue.trim() !== ''
+      ) {
+        // console.log('🔥', newEl.firstChild?.nodeValue.trim())
+        curEl.textContent = newEl.textContent;
+      }
+    });
+  }
+
   _clear() {
     this._parentElement.innerHTML = '';
   }
