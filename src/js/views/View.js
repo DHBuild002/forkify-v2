@@ -38,17 +38,21 @@ export default class View {
         !newEl.isEqualNode(curEl) &&
         newEl.firstChild.nodeValue.trim() !== ''
       ) {
-        // console.log('🔥', newEl.firstChild?.nodeValue.trim())
+        // Commenting out as I now understand this, I had got to the point where we had updsated UI. but not Data Attr 
+        // - console.log('🔥', newEl.firstChild?.nodeValue.trim())
         curEl.textContent = newEl.textContent;
       }
 
       // Updates Changed Attribute in the HTML element
-      if (
-        !newEl.isEqualNode(curEl) &&
-        newEl.firstChild.nodeValue.trim() !== ''
-      ) {
-        // console.log('🔥', newEl.firstChild?.nodeValue.trim())
-        curEl.textContent = newEl.textContent;
+      if (!newEl.isEqualNode(curEl)){
+
+        console.log('🍑' , Array.from(newEl.attributes))
+        Array.from(newEl.attributes).forEach(
+          attr => curEl.setAttribute(attr.name, attr.value)
+          // The above code will take the newElements values and apply 
+          // them to the data attibure of the corresponding button, 
+          // this will then update all the values of each ingredient
+        )
       }
     });
   }
