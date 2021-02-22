@@ -20,13 +20,14 @@ const controlRecipes = async () => {
     if (!id) return;
     RecipeView.renderSpinner();
 
+    // Update Results View to mark select result as active
+    ResultsView.update(model.getSearchResultsPerPage());
+  
     // Load Recipe
     await model.loadRecipe(id);
 
     // Render Recipe - This line of code uses a seperate class to render the active recipe on the page. Check class RecipeView for the render method()
-    RecipeView.render(model.state.recipe);
-      
-    
+    RecipeView.render(model.state.recipe);    
           
   } catch (err) {
     RecipeView.renderError();
@@ -69,6 +70,7 @@ const controlPagination = (gotoPage) => {
   PaginationView.render(model.state.search);
 }
 const controlServings = (newServings) => {
+  
   // Update the number of servings
   model.updateServings(newServings);
   
