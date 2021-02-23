@@ -9,11 +9,12 @@ export const state = {
     page: 1,
     resultsPerPage: RES_PER_PAGE,
     results: [],
-    }
+  },
+  bookmarks: [],
 };
 
 // This Function will change the State Object above:
-export const loadRecipe = async (id) => {
+export const loadRecipe = async id => {
   try {
     const data = await getJSON(`${API_URL}${id}`);
 
@@ -28,20 +29,19 @@ export const loadRecipe = async (id) => {
       cookingTime: recipe.cooking_time,
       ingredients: recipe.ingredients,
     };
-    
   } catch (err) {
     console.error(`${err} 🔥`);
     throw err;
   }
 };
-export const loadSearchResults = async (query) => {
+export const loadSearchResults = async query => {
   try {
     // This is the intake of the search result from the state object created above
     state.search.query = query;
-    const data = await getJSON(`${API_URL}?search=${query}`)
+    const data = await getJSON(`${API_URL}?search=${query}`);
     console.log(data);
 
-    // This is the application of the search query data into the results object 
+    // This is the application of the search query data into the results object
     // we created above in the state object
     state.search.results = data.data.recipes.map(rec => {
       return {
@@ -49,29 +49,46 @@ export const loadSearchResults = async (query) => {
         title: rec.title,
         publisher: rec.publisher,
         image: rec.image_url,
-      }
-    })
-  }catch(err){
+      };
+    });
+    // Reset page of search results to Page 1
+    state.search.page = 1;
+  } catch (err) {
     console.error(`${err} 🔥`);
     throw err;
   }
-}
+};
 export const getSearchResultsPerPage = (page = state.search.page) => {
   state.search.page = page;
 
-  const start = (page - 1) * RES_PER_PAGE; 
+  const start = (page - 1) * RES_PER_PAGE;
   const end = page * RES_PER_PAGE;
 
-  return state.search.results.slice(start, end)
-}
-export const updateServings = (newServings) => {
+  return state.search.results.slice(start, end);
+};
+export const updateServings = newServings => {
+  // this function will:
+  // Take the number of servings > Reach into the state (in partic. Recipe Ingredients)
+  // > Change the quantity of each ingredient
+  console.log(newServings);
+  // Cycle through each ingredient in the ingredients array above in the state object:
   state.recipe.ingredients.forEach(ing => {
-    ing.quantity = ing.quantity * newServings / state.recipe.servings;
+    // For Each Ing quantity > Set it equal to ing current quantity *
+    // newServings(inputted param from this method - const newServings)
+    ing.quantity = (ing.quantity * newServings) / state.recipe.servings;
 
-    // newQuantity = oldQt * newSeringsValue / oldServingsValue
-    // Quantity is a child to the servings value. Therefore if that changes, we should also update the 
-    // individual quantities of each ingredient per person. 4 Meals will serve 4 People. 
+    // newQuantity = oldQt * newServingsValue / oldServingsValue
+    // Quantity is a child to the servings value. Therefore if that changes, we should also update the
+    // individual quantities of each ingredient per person. 4 Meals will serve 4 People.
     // It will not serve 8 with the same portion size.
   });
   state.recipe.servings = newServings;
+};
+export const addBookmark = (recipe) => {
+  // Add Bookmark
+  state.bookmarks.push(recipe);
+  console.log(state.recipe);
+
+  if(recipe.id === state.recipe.id) state.recipe.bookmarked = true;
+  
 }

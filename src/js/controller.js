@@ -16,8 +16,7 @@ if(module.hot) {
 const controlRecipes = async () => {
   try {
     const id = window.location.hash.slice(1);
-
-    if (!id) return;
+    if (!id)return;
     RecipeView.renderSpinner();
 
     // Update Results View to mark select result as active
@@ -70,17 +69,25 @@ const controlPagination = (gotoPage) => {
   PaginationView.render(model.state.search);
 }
 const controlServings = (newServings) => {
-  
-  // Update the number of servings
+
+  // Update the number of servings in the current state of the app
   model.updateServings(newServings);
+  // we delegate the handling of this data to the model, as that is all about handling data.
+  // The controller is about calling a certain method inside of either the model or view 
+  // classes we created elsewhere
   
-  // Render that new value and collection of quantities to the UI
+  // Render that new value and collection of quantities to the ReceipeUI
   RecipeView.update(model.state.recipe);
 }
-
+const controlAddBookmark = function() {
+  model.addBookmark(model.state.recipe);
+  console.log(model.state.recipe)
+  RecipeView.update(model.state.recipe)
+}
 const init = () => {
-  RecipeView.addHandlerRender(controlRecipes)
+  RecipeView.addHandlerRender(controlRecipes);
   RecipeView.addHandlerClick(controlServings);
+  RecipeView.addHandlerAddBookmark(controlAddBookmark);
   
 
   SearchView.addHandlerSearch(controlSearchResults);
