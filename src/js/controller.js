@@ -26,7 +26,8 @@ const controlRecipes = async () => {
     await model.loadRecipe(id);
 
     // Render Recipe - This line of code uses a seperate class to render the active recipe on the page. Check class RecipeView for the render method()
-    RecipeView.render(model.state.recipe);    
+    RecipeView.render(model.state.recipe); 
+    console.log(model.state.recipe);   
           
   } catch (err) {
     RecipeView.renderError();
@@ -36,10 +37,10 @@ const controlSearchResults = async () => {
   try{
     // Render Spinner from ResultsView file
     ResultsView.renderSpinner();
-    console.log(ResultsView);
 
     // Get Search query
     const query = SearchView.getQuery();
+
     if (!query) return;
     
     //Load in the search results from the query
@@ -55,7 +56,7 @@ const controlSearchResults = async () => {
      console.log(err)
   }
 }
-controlSearchResults();
+// controlSearchResults();
 // window.addEventListener('hashchange', showRecipe)
 // window.addEventListener('load', showRecipe)
 
@@ -80,6 +81,9 @@ const controlServings = (newServings) => {
   RecipeView.update(model.state.recipe);
 }
 const controlAddBookmark = function() {
+  if(!model.state.recipe.bookmarked) model.addBookmark(model.state.recipe);
+  else model.deleteBookmark(model.state.recipe.id)
+  
   model.addBookmark(model.state.recipe);
   console.log(model.state.recipe)
   RecipeView.update(model.state.recipe)
@@ -89,7 +93,6 @@ const init = () => {
   RecipeView.addHandlerClick(controlServings);
   RecipeView.addHandlerAddBookmark(controlAddBookmark);
   
-
   SearchView.addHandlerSearch(controlSearchResults);
   PaginationView.addHandlerClick(controlPagination);
   

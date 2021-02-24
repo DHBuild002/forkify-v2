@@ -29,6 +29,10 @@ export const loadRecipe = async id => {
       cookingTime: recipe.cooking_time,
       ingredients: recipe.ingredients,
     };
+
+    if (state.bookmarks.some(bookmark => bookmark.id === id))
+      state.recipe.bookmarked = true;
+    else state.recipe.bookmarked = false;
   } catch (err) {
     console.error(`${err} 🔥`);
     throw err;
@@ -70,7 +74,6 @@ export const updateServings = newServings => {
   // this function will:
   // Take the number of servings > Reach into the state (in partic. Recipe Ingredients)
   // > Change the quantity of each ingredient
-  console.log(newServings);
   // Cycle through each ingredient in the ingredients array above in the state object:
   state.recipe.ingredients.forEach(ing => {
     // For Each Ing quantity > Set it equal to ing current quantity *
@@ -84,11 +87,18 @@ export const updateServings = newServings => {
   });
   state.recipe.servings = newServings;
 };
-export const addBookmark = (recipe) => {
+export const addBookmark = recipe => {
   // Add Bookmark
   state.bookmarks.push(recipe);
-  console.log(state.recipe);
+  // console.log(state.recipe);
 
-  if(recipe.id === state.recipe.id) state.recipe.bookmarked = true;
-  
+  if (recipe.id === state.recipe.id) state.recipe.bookmarked = true;
+};
+export const deleteBookmark = (id) => {
+  // Delete the bookmark
+  const index = state.bookmarks.findIndex(el => el.id === id)
+  state.bookmarks.splice(index, 1);
+
+  // Mark current recipe as not Bookmarked anymore
+  if(id === state.recipe.id) state.recipe.bookmarked = false;
 }

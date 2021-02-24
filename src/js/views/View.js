@@ -33,10 +33,10 @@ export default class View {
       // Updates UI Text
       if (
         !newEl.isEqualNode(curEl) &&
-        newEl.firstChild.nodeValue.trim() !== ''
+        newEl.firstChild?.nodeValue.trim() !== ''
       ) {
-        // Commenting out as I now understand this, I had got to the point where we had updsated UI. but not Data Attr 
-        // - console.log('🔥', newEl.firstChild?.nodeValue.trim())
+        // Commenting out as I now understand this, I had got to the point where we had updated UI. 
+        // but not Data Attr - console.log('🔥', newEl.firstChild?.nodeValue.trim())
         curEl.textContent = newEl.textContent;
       }
 
