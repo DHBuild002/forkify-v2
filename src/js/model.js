@@ -43,7 +43,7 @@ export const loadSearchResults = async query => {
     // This is the intake of the search result from the state object created above
     state.search.query = query;
     const data = await getJSON(`${API_URL}?search=${query}`);
-    console.log(data);
+    // console.log(data);
 
     // This is the application of the search query data into the results object
     // we created above in the state object
@@ -94,11 +94,12 @@ export const addBookmark = recipe => {
 
   if (recipe.id === state.recipe.id) state.recipe.bookmarked = true;
 };
-export const deleteBookmark = (id) => {
+export const deleteBookmark = id => {
+  // debugger;
   // Delete the bookmark
-  const index = state.bookmarks.findIndex(el => el.id === id)
+  const index = state.bookmarks.findIndex(el => el.id === id);
   state.bookmarks.splice(index, 1);
 
   // Mark current recipe as not Bookmarked anymore
-  if(id === state.recipe.id) state.recipe.bookmarked = false;
-}
+  if (id === state.recipe.id) state.recipe.bookmarked = false;
+};

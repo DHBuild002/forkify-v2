@@ -2,6 +2,7 @@ import * as model from './model.js';
 import RecipeView from './views/RecipeView.js';
 import SearchView from './views/SearchView.js';
 import ResultsView from './views/ResultsView.js';
+import BookmarksView from './views/BookmarksView.js';
 import PaginationView from './views/PaginationView.js';
 import icons from '../img/icons.svg';
 
@@ -21,13 +22,14 @@ const controlRecipes = async () => {
 
     // Update Results View to mark select result as active
     ResultsView.update(model.getSearchResultsPerPage());
+    BookmarksView.update(model.state.bookmarks)
   
     // Load Recipe
     await model.loadRecipe(id);
 
     // Render Recipe - This line of code uses a seperate class to render the active recipe on the page. Check class RecipeView for the render method()
     RecipeView.render(model.state.recipe); 
-    console.log(model.state.recipe);   
+    // console.log(model.state.recipe);   
           
   } catch (err) {
     RecipeView.renderError();
@@ -48,6 +50,7 @@ const controlSearchResults = async () => {
 
     // Render Results
     ResultsView.render(model.getSearchResultsPerPage());
+  
 
     // Render initial Search Pagination buttons
     PaginationView.render(model.state.search);
@@ -81,12 +84,15 @@ const controlServings = (newServings) => {
   RecipeView.update(model.state.recipe);
 }
 const controlAddBookmark = function() {
+  
+  // Add/Remove Bookmark
   if(!model.state.recipe.bookmarked) model.addBookmark(model.state.recipe);
   else model.deleteBookmark(model.state.recipe.id)
-  
-  model.addBookmark(model.state.recipe);
-  console.log(model.state.recipe)
+  // Update Recipe View
   RecipeView.update(model.state.recipe)
+
+  // RecipeView Render
+  BookmarksView.render(model.state.bookmarks);
 }
 const init = () => {
   RecipeView.addHandlerRender(controlRecipes);
