@@ -1,6 +1,6 @@
 import { async } from 'regenerator-runtime';
-import { API_URL, RES_PER_PAGE, API_KEY} from './config.js';
-import { getJSON, sendJSON} from './helpers.js';
+import { API_URL, RES_PER_PAGE, API_KEY } from './config.js';
+import { getJSON, sendJSON } from './helpers.js';
 
 export const state = {
   recipe: {},
@@ -13,8 +13,8 @@ export const state = {
   bookmarks: [],
 };
 
-export const createRecipeObject = (data) => {
-  const {recipe} = data.data;
+export const createRecipeObject = data => {
+  const { recipe } = data.data;
   return {
     id: recipe.id,
     title: recipe.title,
@@ -24,8 +24,9 @@ export const createRecipeObject = (data) => {
     servings: recipe.servings,
     cookingTime: recipe.cooking_time,
     ingredients: recipe.ingredients,
+    ...(recipe.key && { key: recipe.key }),
   };
-}
+};
 
 // This Function will change the State Object above:
 export const loadRecipe = async id => {
@@ -124,22 +125,22 @@ init();
 
 // const clearBookmarks = () => {
 //   localStorage.clear('bookmarks')
-// // }
-// clearBookmarks(); - Use this Function to testing purposes ONLY!
+// }
+// clearBookmarks(); 
+// Use this Function to testing purposes ONLY!
 
 export const uploadRecipe = async function (newRecipe) {
-  try{
-  const ingredients = Object.entries(newRecipe)
-    .filter(entry => entry[0].startsWith('ingredient') && entry[1] !== '')
-    .map(ing => {
-      const ingArr = ing[1]
-      .replaceAll(' ', '')
-      .split(',');
-      const [quantity, unit, description] = ingArr;
-      if(ingArr.length !== 3) throw new Error('Please check the formatting of data inputted.');
+  try {
+    const ingredients = Object.entries(newRecipe)
+      .filter(entry => entry[0].startsWith('ingredient') && entry[1] !== '')
+      .map(ing => {
+        const ingArr = ing[1].replaceAll(' ', '').split(',');
+        const [quantity, unit, description] = ingArr;
+        if (ingArr.length !== 3)
+          throw new Error('Please check the formatting of data inputted.');
 
-      return { quantity: quantity ? +quantity : null, unit, description };
-    });
+        return { quantity: quantity ? +quantity : null, unit, description };
+      });
     const recipe = {
       title: newRecipe.title,
       source_url: newRecipe.sourceUrl,
@@ -148,11 +149,13 @@ export const uploadRecipe = async function (newRecipe) {
       cooking_time: +newRecipe.cookingTime,
       servings: +newRecipe.servings,
       ingredients,
-    }
+    };
     console.log(recipe);
     const data = await sendJSON(`${API_URL}?key=${API_KEY}`, recipe);
     state.recipe = createRecipeObject(data);
-    console.log(data)
+    addBookmark(state.recipe);
+
+    console.log(data);
   } catch (err) {
     throw err;
   }
