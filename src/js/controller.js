@@ -105,8 +105,15 @@ const controlBookmarks = () => {
   BookmarksView.render(model.state.bookmarks);
 };
 
-const controlAddRecipe = (newRecipe) => {
-  console.log(newRecipe);
+const controlAddRecipe = async (newRecipe) => {
+  try{
+    await model.uploadRecipe(newRecipe);
+    console.log(model.state.recipe);
+
+  } catch(err) {
+    console.error('Problem: ', err);
+    AddRecipeView.renderError(err.message);
+  }
 }
 
 const init = () => {
@@ -122,8 +129,3 @@ const init = () => {
 };
 
 init();
-
-// const clearBookmarks = () => {
-//   localStorage.clear('bookmarks')
-// // }
-// clearBookmarks(); - Use this Function to testing purposes ONLY!
