@@ -1,6 +1,8 @@
 import { async } from 'regenerator-runtime';
 import { API_URL, RES_PER_PAGE, API_KEY } from './config.js';
-import { getJSON, sendJSON } from './helpers.js';
+// import { getJSON, sendJSON } from './helpers.js';
+// import { clearBookmarks } from  './clearBookmarkView'
+import { AJAX } from './helpers.js';
 
 export const state = {
   recipe: {},
@@ -31,7 +33,7 @@ export const createRecipeObject = data => {
 // This Function will change the State Object above:
 export const loadRecipe = async id => {
   try {
-    const data = await getJSON(`${API_URL}${id}`);
+    const data = await AJAX(`${API_URL}${id}?key=${API_KEY}`);
     state.recipe = createRecipeObject(data);
 
     if (state.bookmarks.some(bookmark => bookmark.id === id))
@@ -46,7 +48,7 @@ export const loadSearchResults = async query => {
   try {
     // This is the intake of the search result from the state object created above
     state.search.query = query;
-    const data = await getJSON(`${API_URL}?search=${query}`);
+    const data = await AJAX(`${API_URL}?search=${query}&key=${API_KEY}`);
     // console.log(data);
 
     // This is the application of the search query data into the results object
@@ -57,6 +59,7 @@ export const loadSearchResults = async query => {
         title: rec.title,
         publisher: rec.publisher,
         image: rec.image_url,
+        ...(rec.key && { key: rec.key })
       };
     });
     // Reset page of search results to Page 1
@@ -121,13 +124,6 @@ const init = () => {
 };
 
 init();
-// console.log(state.bookmarks);
-
-// const clearBookmarks = () => {
-//   localStorage.clear('bookmarks')
-// }
-// clearBookmarks(); 
-// Use this Function to testing purposes ONLY!
 
 export const uploadRecipe = async function (newRecipe) {
   try {
@@ -151,7 +147,7 @@ export const uploadRecipe = async function (newRecipe) {
       ingredients,
     };
     console.log(recipe);
-    const data = await sendJSON(`${API_URL}?key=${API_KEY}`, recipe);
+    const data = await AJAX(`${API_URL}?key=${API_KEY}`, recipe);
     state.recipe = createRecipeObject(data);
     addBookmark(state.recipe);
 
