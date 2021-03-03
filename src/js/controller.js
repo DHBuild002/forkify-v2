@@ -9,6 +9,7 @@ import BookmarksView from './views/BookmarksView.js';
 import PaginationView from './views/PaginationView.js';
 import AddRecipeView from './views/AddRecipeView.js';
 
+
 import icons from '../img/icons.svg';
 
 import 'core-js/stable';
@@ -18,6 +19,10 @@ import { async } from 'regenerator-runtime';
 if (module.hot) {
   module.hot.accept();
 }
+const clearBookmarks = () => {
+  localStorage.clear('bookmarks')
+}
+clearBookmarks();
 
 const controlRecipes = async () => {
   try {

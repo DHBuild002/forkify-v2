@@ -1,7 +1,6 @@
 import { async } from 'regenerator-runtime';
 import { API_URL, RES_PER_PAGE, API_KEY } from './config.js';
 // import { getJSON, sendJSON } from './helpers.js';
-// import { clearBookmarks } from  './clearBookmarkView'
 import { AJAX } from './helpers.js';
 
 export const state = {
@@ -49,8 +48,8 @@ export const loadSearchResults = async query => {
     // This is the intake of the search result from the state object created above
     state.search.query = query;
     const data = await AJAX(`${API_URL}?search=${query}&key=${API_KEY}`);
-    // console.log(data);
-
+    console.log(data)
+    console.log(query)
     // This is the application of the search query data into the results object
     // we created above in the state object
     state.search.results = data.data.recipes.map(rec => {
@@ -130,7 +129,8 @@ export const uploadRecipe = async function (newRecipe) {
     const ingredients = Object.entries(newRecipe)
       .filter(entry => entry[0].startsWith('ingredient') && entry[1] !== '')
       .map(ing => {
-        const ingArr = ing[1].replaceAll(' ', '').split(',');
+        // const ingArr = ing[1].replaceAll(' ', '').split(',');
+        const ingArr = ing[1].split(',').map(el => el.trim());
         const [quantity, unit, description] = ingArr;
         if (ingArr.length !== 3)
           throw new Error('Please check the formatting of data inputted.');
