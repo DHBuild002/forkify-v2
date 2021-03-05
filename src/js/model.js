@@ -49,7 +49,7 @@ export const loadSearchResults = async query => {
     state.search.query = query;
     const data = await AJAX(`${API_URL}?search=${query}&key=${API_KEY}`);
     console.log(data)
-    console.log(query)
+    // console.log(query)
     // This is the application of the search query data into the results object
     // we created above in the state object
     state.search.results = data.data.recipes.map(rec => {
@@ -84,8 +84,8 @@ export const updateServings = newServings => {
   state.recipe.ingredients.forEach(ing => {
     // For Each Ing quantity > Set it equal to ing current quantity *
     // newServings(inputted param from this method - const newServings)
+  
     ing.quantity = (ing.quantity * newServings) / state.recipe.servings;
-
     // newQuantity = oldQt * newServingsValue / oldServingsValue
     // Quantity is a child to the servings value. Therefore if that changes, we should also update the
     // individual quantities of each ingredient per person. 4 Meals will serve 4 People.
@@ -151,7 +151,7 @@ export const uploadRecipe = async function (newRecipe) {
     state.recipe = createRecipeObject(data);
     addBookmark(state.recipe);
 
-    console.log(data);
+    // console.log(data);
   } catch (err) {
     throw err;
   }

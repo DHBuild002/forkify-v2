@@ -37,7 +37,7 @@ class AddRecipeView extends View {
       // From entries takes an array of data dn turns them into an object 
       // - Opposite of Entries method available on arrays
       const data = Object.fromEntries(dataArr);
-    //   console.log(data);
+      console.log(data);
     
       handler(data);
     });
