@@ -4,5 +4,7 @@ node_modules
 .map
 .debug
 
+config.js
+
 /dist
 /dist/*

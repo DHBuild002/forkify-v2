@@ -9,7 +9,6 @@ import BookmarksView from './views/BookmarksView.js';
 import PaginationView from './views/PaginationView.js';
 import AddRecipeView from './views/AddRecipeView.js';
 
-
 import icons from '../img/icons.svg';
 
 import 'core-js/stable';
@@ -19,10 +18,10 @@ import { async } from 'regenerator-runtime';
 if (module.hot) {
   module.hot.accept();
 }
-const clearBookmarks = () => {
-  localStorage.clear('bookmarks')
-}
-clearBookmarks();
+// const clearBookmarks = () => {
+//   localStorage.clear('bookmarks')
+// }
+// clearBookmarks();
 
 const controlRecipes = async () => {
   try {
@@ -122,7 +121,7 @@ const controlAddRecipe = async newRecipe => {
 
     // Display Success Message
     AddRecipeView.renderSuccess();
-
+    
     // render Bookmark view
     BookmarksView.render(model.state.bookmarks);
 
@@ -137,6 +136,8 @@ const controlAddRecipe = async newRecipe => {
     console.error('Problem: ', err);
     AddRecipeView.renderError(err.message);
   }
+  // This will prevent the Success message showing up twice, due to the form being removed after submission
+  location.reload();
 };
 
 const init = () => {

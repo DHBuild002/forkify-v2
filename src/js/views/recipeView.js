@@ -124,11 +124,12 @@ class RecipeView extends View {
           <use href="${icons}#icon-check"></use>
         </svg>
         <div class="recipe__quantity">${
-          ing.quantity ? new Fraction (Math.round(ing.quantity * 10000) / 10000).toString() : ''
+          ing.quantity
+            ? new Fraction(Math.round(ing.quantity * 10000) / 10000).toString()
+            : ''
         }</div>
         <div class="recipe__description">
-          <span class="recipe__unit">${ing.unit}</span>
-          ${ing.description}
+          <span class="recipe__unit">${ing.unit}</span> ${ing.description}
         </div>
       </li>
     `;
