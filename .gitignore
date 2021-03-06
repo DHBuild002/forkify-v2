@@ -4,8 +4,7 @@ node_modules
 .map
 .debug
 
-config.js
+src/js/config.js
 
 /dist
 /dist/*
-*-lock.json
