@@ -8,3 +8,4 @@ config.js
 
 /dist
 /dist/*
+*-lock.json
