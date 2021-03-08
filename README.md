@@ -6,4 +6,4 @@ It was interesting to revisit the code with a revamped UI, and learn it all over
 Plus some additional features such as API-Specific results, have been added this time around.
 
 #### You can try it out for yourself right here: 
-(https://forkify-v2-dan.netlify.app/)[https://forkify-v2-dan.netlify.app/]
+[https://forkify-v2-dan.netlify.app/](https://forkify-v2-dan.netlify.app/)
